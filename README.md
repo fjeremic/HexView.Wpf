@@ -4,9 +4,11 @@
 
 A WPF control for displaying binary data in a traditional hex view.
 
+<br/>
 <p align="center">
  <img align="center" alt="HexViewer demo project" src="https://raw.githubusercontent.com/fjeremic/HexView.Wpf/assets/HexViewer.png"/>
 </p>
+<br/>
 
 ## Installing / Getting started
 
@@ -38,18 +40,23 @@ dotnet build
 
 These screenshots were generated using the demo application found in the [HexView.Wpf.Demo](/HexView.Wpf.Demo) project of this repository which uses the control to implement a simple file hex viewer application.
 
+<br/>
 <p align="center">
   <img align="center" src="https://raw.githubusercontent.com/fjeremic/HexView.Wpf/assets/HexViewResize.gif"/>
 </p>
+<br/>
 <p align="center">
   <img align="center" src="https://raw.githubusercontent.com/fjeremic/HexView.Wpf/assets/HexViewerContextMenu.png"/>
 </p>
+<br/>
 <p align="center">
   <img align="center" src="https://raw.githubusercontent.com/fjeremic/HexView.Wpf/assets/HexViewerLongSelected.png"/> 
 </p>
+<br/>
 <p align="center">
   <img align="center" src="https://raw.githubusercontent.com/fjeremic/HexView.Wpf/assets/HexViewerSignedShort.png"/>
 </p>
+<br/>
 <p align="center">
   <img align="center" src="https://raw.githubusercontent.com/fjeremic/HexView.Wpf/assets/HexViewerTextOnly.png"/> 
 </p>
