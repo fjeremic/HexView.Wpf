@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Authors>Filip Jeremic</Authors>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Description>A WPF control for displaying binary data in a traditional hex view.</Description>
+    <PackageProjectUrl>https://github.com/fjeremic/HexView.Wpf</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/fjeremic/HexView.Wpf</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>WPF;HexView;HexViewer</PackageTags>
+    <Version>0.1.0</Version>
+    <PackageReleaseNotes>Release notes:
+https://github.com/fjeremic/HexView.Wpf/releases</PackageReleaseNotes>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Converters\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

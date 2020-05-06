@@ -1,0 +1,902 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HexView.Wpf</name>
+    </assembly>
+    <members>
+        <member name="T:HexView.Wpf.Converters.EqualityConverter">
+            <summary>
+            A converter which tests for equality against a parameter.
+            </summary>
+        </member>
+        <member name="M:HexView.Wpf.Converters.EqualityConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+             <summary>
+             Tests the value against the parameter for equality.
+             </summary>
+            
+             <param name="value">
+             The value produced by the binding source.
+             </param>
+            
+             <param name="targetType">
+             The type of the binding target property which must be <see cref="T:System.Boolean"/>.
+             </param>
+            
+             <param name="parameter">
+             The converter parameter to use.
+             </param>
+            
+             <param name="culture">
+             The culture to use in the converter which is unused.
+             </param>
+            
+             <returns>
+             <c>true</c> if <paramref name="value"/> is equal to <paramref name="parameter"/>; <c>false</c> otherwise.
+             </returns>
+        </member>
+        <member name="M:HexView.Wpf.Converters.EqualityConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+             <summary>
+             Tests the value against the parameter for equality.
+             </summary>
+            
+             <param name="value">
+             The value produced by the binding source.
+             </param>
+            
+             <param name="targetType">
+             The type of the binding target property which must be <see cref="T:System.Boolean"/>.
+             </param>
+            
+             <param name="parameter">
+             The converter parameter to use.
+             </param>
+            
+             <param name="culture">
+             The culture to use in the converter which is unused.
+             </param>
+            
+             <returns>
+             <c>true</c> if <paramref name="value"/> is equal to <paramref name="parameter"/>; <c>false</c> otherwise.
+             </returns>
+        </member>
+        <member name="T:HexView.Wpf.Converters.MultiEqualityConverter">
+            <summary>
+            A converter which tests for equality against an <see cref="T:System.Collections.ArrayList"/> of parameters.
+            </summary>
+        </member>
+        <member name="M:HexView.Wpf.Converters.MultiEqualityConverter.Convert(System.Object[],System.Type,System.Object,System.Globalization.CultureInfo)">
+             <summary>
+             Tests the values against the sequence of parameters for equality.
+             </summary>
+            
+             <param name="values">
+             The values produced by the binding source.
+             </param>
+            
+             <param name="targetType">
+             The type of the binding target property which must be <see cref="T:System.Boolean"/>.
+             </param>
+            
+             <param name="parameter">
+             The converter parameters to use which must be of type <see cref="T:System.Collections.ArrayList"/>.
+             </param>
+            
+             <param name="culture">
+             The culture to use in the converter which is unused.
+             </param>
+            
+             <returns>
+             <c>true</c> if the one-to-one mapping of <paramref name="values"/> to <paramref name="parameter"/> all test
+             for equality induvidually; <c>false</c> otherwise.
+             </returns>
+            
+             <remarks>
+             Ideally we would like to use <c>x:Array</c> to supply the parameters, however WPF currently throws an
+             exception that the <see cref="P:System.Windows.Data.MultiBinding.ConverterParameter"/> is <c>null</c>. It is unkonwn whether this
+             is by deisgn or it is an existing bug in WPF itself.
+             </remarks>
+        </member>
+        <member name="M:HexView.Wpf.Converters.MultiEqualityConverter.ConvertBack(System.Object,System.Type[],System.Object,System.Globalization.CultureInfo)">
+             <summary>
+             Tests the values against the sequence of parameters for equality.
+             </summary>
+            
+             <param name="values">
+             The values produced by the binding source.
+             </param>
+            
+             <param name="targetType">
+             The type of the binding target property which must be <see cref="T:System.Boolean"/>.
+             </param>
+            
+             <param name="parameter">
+             The converter parameters to use which must be of type <see cref="T:System.Collections.ArrayList"/>.
+             </param>
+            
+             <param name="culture">
+             The culture to use in the converter which is unused.
+             </param>
+            
+             <returns>
+             <c>true</c> if the one-to-one mapping of <paramref name="values"/> to <paramref name="parameter"/> all test
+             for equality induvidually; <c>false</c> otherwise.
+             </returns>
+        </member>
+        <member name="T:HexView.Wpf.DataFormat">
+            <summary>
+            Enumerates the format to display integral data in.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.DataFormat.Decimal">
+            <summary>
+            Display the data in decimal format.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.DataFormat.Hexadecimal">
+            <summary>
+            Display the data in hexadecimal format.
+            </summary>
+        </member>
+        <member name="T:HexView.Wpf.DataSignedness">
+            <summary>
+            Enumerates the signedness of the data to display.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.DataSignedness.Signed">
+            <summary>
+            Display the data as signed values.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.DataSignedness.Unsigned">
+            <summary>
+            Display the data as unsigned values.
+            </summary>
+        </member>
+        <member name="T:HexView.Wpf.DataType">
+            <summary>
+            Enumerates how the data (bytes read from the buffer) is to be interpreted when displayed.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.DataType.FloatingPoint">
+            <summary>
+            Display the data as floating point values.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.DataType.Integer">
+            <summary>
+            Display the data as integral (integer) values.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:HexView.Wpf.HexViewer" -->
+        <member name="F:HexView.Wpf.HexViewer.ShowAddressProperty">
+            <summary>
+            Defines the ShowAddressProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.ShowDataProperty">
+            <summary>
+            Defines the ShowDataProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.ShowTextProperty">
+            <summary>
+            Defines the ShowTextProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.AddressProperty">
+            <summary>
+            Defines the AddressProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.AddressBrushProperty">
+            <summary>
+            Defines the AddressBrushProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.OffsetProperty">
+            <summary>
+            Defines the OffsetProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.DataSourceProperty">
+            <summary>
+            Defines the DataSourceProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.DataWidthProperty">
+            <summary>
+            Defines the DataWidthProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.ColumnsProperty">
+            <summary>
+            Defines the ColumnsProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.MaxVisibleColumnsPropertyKey">
+            <summary>
+            Defines the MaxVisibleColumnsPropertyKey.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.MaxVisibleColumnsProperty">
+            <summary>
+            Defines the MaxVisibleColumnsProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.MaxVisibleRowsPropertyKey">
+            <summary>
+            Defines the MaxVisibleRowsPropertyKey.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.MaxVisibleRowsProperty">
+            <summary>
+            Defines the MaxVisibleRowsProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.DataFormatProperty">
+            <summary>
+            Defines the DataFormatProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.DataSignednessProperty">
+            <summary>
+            Defines the DataSignednessProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.DataTypeProperty">
+            <summary>
+            Defines the DataTypeProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.AlternatingDataColumnTextBrushProperty">
+            <summary>
+            Brush used for alternating for text in alternating (odd numbered) columns in the data section of the control.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.SelectionBrushProperty">
+            <summary>
+            Brush used for selection fill.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.SelectionTextBrushProperty">
+            <summary>
+            Brush used for selected text.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.TextFormatProperty">
+            <summary>
+            Defines the TextFormatProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.SelectionEndPropertyKey">
+            <summary>
+            Defines the SelectionEndPropertyKey.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.SelectionEndProperty">
+            <summary>
+            Defines the SelectionEndProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.SelectionStartPropertyKey">
+            <summary>
+            Defines the SelectionStartPropertyKey.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.SelectionStartProperty">
+            <summary>
+            Defines the SelectionStartProperty.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.VerticalScrollBarName">
+            <summary>
+            Defines the VerticalScrollBarName.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.CanvasName">
+            <summary>
+            Defines the CanvasName.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.MaxColumns">
+            <summary>
+            Gets the maximum number of data/text columns this control can display.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.MaxRows">
+            <summary>
+            Gets the maximum number of data/text rows this control can display.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.CharsBetweenSections">
+            <summary>
+            Gets the number of font characters between the address, data, and text sections.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.CharsBetweenDataColumns">
+            <summary>
+            Gets the number of font characters between each data column.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.ScrollWheelScrollRows">
+            <summary>
+            Gets the number rows to scroll when the mouse wheel is scrolled.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.cachedFormattedChar">
+            <summary>
+            Represents a formatted character in the control's font used to calculate various dimensions of this view.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.canvas">
+            <summary>
+            Defines the canvas.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.highlightBegin">
+            <summary>
+            Represents where the highlighting begun.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.highlightState">
+            <summary>
+            Represents the current highlighting state.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.lastVerticalScrollValue">
+            <summary>
+            The last known <see cref="F:HexView.Wpf.HexViewer.verticalScrollBar"/> value.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.verticalScrollBar">
+            <summary>
+            Defines the verticalScrollBar.
+            </summary>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.#cctor">
+            <summary>
+            Initializes static members of the <see cref="T:HexView.Wpf.HexViewer"/> class.
+            </summary>
+        </member>
+        <member name="E:HexView.Wpf.HexViewer.PropertyChanged">
+            <inheritdoc/>
+        </member>
+        <member name="T:HexView.Wpf.HexViewer.SelectionArea">
+            <summary>
+            Represents a selectable area within the control.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.SelectionArea.None">
+            <summary>
+            Represents no selection area.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.SelectionArea.Address">
+            <summary>
+            Represents the area displaying the hex address.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.SelectionArea.Data">
+            <summary>
+            Represents the area displaying the data.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.HexViewer.SelectionArea.Text">
+            <summary>
+            Represents the area displaying the text.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.CopyCommand">
+            <summary>
+            Gets the CopyCommand.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.ShowAddress">
+            <summary>
+            Gets or sets a value indicating whether ShowAddress.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.ShowData">
+            <summary>
+            Gets or sets a value indicating whether ShowData.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.ShowText">
+            <summary>
+            Gets or sets a value indicating whether ShowText.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.Address">
+            <summary>
+            Gets or sets the Address.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.AddressBrush">
+            <summary>
+            Gets or sets the AddressBrush.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.Offset">
+            <summary>
+            Gets or sets the Offset.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.DataSource">
+            <summary>
+            Gets or sets the DataSource.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.DataWidth">
+            <summary>
+            Gets or sets the DataWidth.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.Columns">
+            <summary>
+            Gets or sets the Columns.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.MaxVisibleColumns">
+            <summary>
+            Gets or sets the MaxVisibleColumns.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.MaxVisibleRows">
+            <summary>
+            Gets or sets the MaxVisibleRows.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.DataFormat">
+            <summary>
+            Gets or sets the DataFormat.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.DataSignedness">
+            <summary>
+            Gets or sets the DataSignedness.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.DataType">
+            <summary>
+            Gets or sets the DataType.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.AlternatingDataColumnTextBrush">
+            <summary>
+            Gets or sets the AlternatingDataColumnTextBrush
+            <see cref="F:HexView.Wpf.HexViewer.AlternatingDataColumnTextBrushProperty"/>.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.SelectionBrush">
+            <summary>
+            Gets or sets the SelectionBrush
+            <see cref="F:HexView.Wpf.HexViewer.SelectionBrushProperty"/>.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.SelectionTextBrush">
+            <summary>
+            Gets or sets the SelectionTextBrush
+            <see cref="F:HexView.Wpf.HexViewer.SelectionTextBrushProperty"/>.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.IsSelectionActive">
+            <summary>
+            Gets a value indicating whether IsSelectionActive
+            Gets a value that indicates whether the memory view has selected addresses.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.TextFormat">
+            <summary>
+            Gets or sets the TextFormat.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.SelectedAddress">
+            <summary>
+            Gets the SelectedAddress.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.SelectedOffset">
+            <summary>
+            Gets the SelectedOffset.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.SelectionEnd">
+            <summary>
+            Gets or sets the SelectionEnd.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.SelectionLength">
+            <summary>
+            Gets the SelectionLength.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.SelectionStart">
+            <summary>
+            Gets or sets the SelectionStart.
+            </summary>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.Copy">
+            <summary>
+            Copies the current selection of the memory view control to the <see cref="T:System.Windows.Clipboard"/>.
+            </summary>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.OnApplyTemplate">
+            <inheritdoc/>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.ScrollToOffset(System.Int64)">
+            <summary>
+            Scrolls the contents of the memory view to the specified offset.
+            </summary>
+            <param name="offset">The offset<see cref="T:System.Int64"/>.</param>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.OnKeyDown(System.Windows.Input.KeyEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.OnMouseDoubleClick(System.Windows.Input.MouseButtonEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.OnMouseMove(System.Windows.Input.MouseEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.OnMouseWheel(System.Windows.Input.MouseWheelEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.OnRender(System.Windows.Media.DrawingContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.OnSelectionEndChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            The OnSelectionEndChanged.
+            </summary>
+            <param name="d">The d<see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="e">The e<see cref="T:System.Windows.DependencyPropertyChangedEventArgs"/>.</param>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.OnSelectionStartChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            The OnSelectionStartChanged.
+            </summary>
+            <param name="d">The d<see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="e">The e<see cref="T:System.Windows.DependencyPropertyChangedEventArgs"/>.</param>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CoerceColumns(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            The CoerceColumns.
+            </summary>
+            <param name="d">The d<see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="value">The value<see cref="T:System.Object"/>.</param>
+            <returns>The <see cref="T:System.Object"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CoerceMaxVisibleColumns(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            The CoerceMaxVisibleColumns.
+            </summary>
+            <param name="d">The d<see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="value">The value<see cref="T:System.Object"/>.</param>
+            <returns>The <see cref="T:System.Object"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CoerceMaxVisibleRows(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            The CoerceMaxVisibleRows.
+            </summary>
+            <param name="d">The d<see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="value">The value<see cref="T:System.Object"/>.</param>
+            <returns>The <see cref="T:System.Object"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CoerceSelectionStart(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            The CoerceSelectionStart.
+            </summary>
+            <param name="d">The d<see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="value">The value<see cref="T:System.Object"/>.</param>
+            <returns>The <see cref="T:System.Object"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CoerceSelectionEnd(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            The CoerceSelectionEnd.
+            </summary>
+            <param name="d">The d<see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="value">The value<see cref="T:System.Object"/>.</param>
+            <returns>The <see cref="T:System.Object"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CoerceDataWidth(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            The CoerceDataWidth.
+            </summary>
+            <param name="d">The d<see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="value">The value<see cref="T:System.Object"/>.</param>
+            <returns>The <see cref="T:System.Object"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CoerceOffset(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            The CoerceOffset.
+            </summary>
+            <param name="d">The d<see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="value">The value<see cref="T:System.Object"/>.</param>
+            <returns>The <see cref="T:System.Object"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.OnAddressChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            The OnAddressChanged.
+            </summary>
+            <param name="d">The d<see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="e">The e<see cref="T:System.Windows.DependencyPropertyChangedEventArgs"/>.</param>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.OnDataTypeChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            The OnDataTypeChanged.
+            </summary>
+            <param name="d">The d<see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="e">The e<see cref="T:System.Windows.DependencyPropertyChangedEventArgs"/>.</param>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.OnDataSourceChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            The OnDataSourceChanged.
+            </summary>
+            <param name="d">The d<see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="e">The e<see cref="T:System.Windows.DependencyPropertyChangedEventArgs"/>.</param>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.OnDataWidthChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            The OnDataWidthChanged.
+            </summary>
+            <param name="d">The d<see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="e">The e<see cref="T:System.Windows.DependencyPropertyChangedEventArgs"/>.</param>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.ReadFormattedText">
+            <summary>
+            The ReadFormattedText.
+            </summary>
+            <returns>The <see cref="T:System.String"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.ReadFormattedData">
+            <summary>
+            The ReadFormattedData.
+            </summary>
+            <returns>The <see cref="T:System.String"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CopyExecuted(System.Object,System.Windows.Input.ExecutedRoutedEventArgs)">
+            <summary>
+            The CopyExecuted.
+            </summary>
+            <param name="sender">The sender<see cref="T:System.Object"/>.</param>
+            <param name="e">The e<see cref="T:System.Windows.Input.ExecutedRoutedEventArgs"/>.</param>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CopyCanExecute(System.Object,System.Windows.Input.CanExecuteRoutedEventArgs)">
+            <summary>
+            The CopyCanExecute.
+            </summary>
+            <param name="sender">The sender<see cref="T:System.Object"/>.</param>
+            <param name="e">The e<see cref="T:System.Windows.Input.CanExecuteRoutedEventArgs"/>.</param>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.OnVerticalScrollBarScroll(System.Object,System.Windows.Controls.Primitives.ScrollEventArgs)">
+            <summary>
+            The OnVerticalScrollBarScroll.
+            </summary>
+            <param name="sender">The sender<see cref="T:System.Object"/>.</param>
+            <param name="e">The e<see cref="T:System.Windows.Controls.Primitives.ScrollEventArgs"/>.</param>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CalculateAddressColumnCharWidth">
+            <summary>
+            The CalculateAddressColumnCharWidth.
+            </summary>
+            <returns>The <see cref="T:System.Int32"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CalculateDataColumnCharWidth">
+            <summary>
+            The CalculateDataColumnCharWidth.
+            </summary>
+            <returns>The <see cref="T:System.Int32"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CalculateAddressVerticalLinePoint0">
+            <summary>
+            The CalculateAddressVerticalLinePoint0.
+            </summary>
+            <returns>The <see cref="T:System.Windows.Point"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CalculateAddressVerticalLinePoint1">
+            <summary>
+            The CalculateAddressVerticalLinePoint1.
+            </summary>
+            <returns>The <see cref="T:System.Windows.Point"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CalculateDataVerticalLinePoint0">
+            <summary>
+            The CalculateDataVerticalLinePoint0.
+            </summary>
+            <returns>The <see cref="T:System.Windows.Point"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CalculateDataVerticalLinePoint1">
+            <summary>
+            The CalculateDataVerticalLinePoint1.
+            </summary>
+            <returns>The <see cref="T:System.Windows.Point"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CalculateTextColumnCharWidth">
+            <summary>
+            The CalculateTextColumnCharWidth.
+            </summary>
+            <returns>The <see cref="T:System.Int32"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CalculateTextVerticalLinePoint0">
+            <summary>
+            The CalculateTextVerticalLinePoint0.
+            </summary>
+            <returns>The <see cref="T:System.Windows.Point"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CalculateTextVerticalLinePoint1">
+            <summary>
+            The CalculateTextVerticalLinePoint1.
+            </summary>
+            <returns>The <see cref="T:System.Windows.Point"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.DrawSelectionGeometry(System.Windows.Media.DrawingContext,System.Windows.Media.Brush,System.Windows.Media.Pen,System.Windows.Point,System.Windows.Point,HexView.Wpf.HexViewer.SelectionArea)">
+            <summary>
+            Draws the geometry which renders the selection box between two offsets.
+            </summary>
+            <param name="drawingContext">The drawingContext<see cref="T:System.Windows.Media.DrawingContext"/>.</param>
+            <param name="brush">The brush<see cref="T:System.Windows.Media.Brush"/>.</param>
+            <param name="pen">The pen<see cref="T:System.Windows.Media.Pen"/>.</param>
+            <param name="point0">The point0<see cref="T:System.Windows.Point"/>.</param>
+            <param name="point1">The point1<see cref="T:System.Windows.Point"/>.</param>
+            <param name="relativeTo">The relativeTo<see cref="T:HexView.Wpf.HexViewer.SelectionArea"/>.</param>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.Update">
+            <summary>
+            The Update.
+            </summary>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.UpdateMaxVisible">
+            <summary>
+            The UpdateMaxVisible.
+            </summary>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.UpdateScrollBar">
+            <summary>
+            The UpdateScrollBar.
+            </summary>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.ConvertPositionToOffset(System.Windows.Point)">
+            <summary>
+            The ConvertPositionToOffset.
+            </summary>
+            <param name="position">The position<see cref="T:System.Windows.Point"/>.</param>
+            <returns>The <see cref="T:System.Int64"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.ConvertOffsetToPosition(System.Int64,HexView.Wpf.HexViewer.SelectionArea)">
+            <summary>
+            The ConvertOffsetToPosition.
+            </summary>
+            <param name="offset">The offset<see cref="T:System.Int64"/>.</param>
+            <param name="relativeTo">The relativeTo<see cref="T:HexView.Wpf.HexViewer.SelectionArea"/>.</param>
+            <returns>The <see cref="T:System.Windows.Point"/>.</returns>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.IsOffsetVisible(System.Int64)">
+            <summary>
+            Determines if the specified offset is visible on the user screen.
+            </summary>
+            <param name="offset">The offset<see cref="T:System.Int64"/>.</param>
+            <returns>The <see cref="T:System.Boolean"/>.</returns>
+        </member>
+        <member name="T:HexView.Wpf.HexViewer.CanvasVisualHost">
+            <summary>
+            Defines the <see cref="T:HexView.Wpf.HexViewer.CanvasVisualHost" />.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.CanvasVisualHost.Visual">
+            <summary>
+            Gets or sets the Visual.
+            </summary>
+        </member>
+        <member name="P:HexView.Wpf.HexViewer.CanvasVisualHost.VisualChildrenCount">
+            <summary>
+            Gets the VisualChildrenCount.
+            </summary>
+        </member>
+        <member name="M:HexView.Wpf.HexViewer.CanvasVisualHost.GetVisualChild(System.Int32)">
+            <summary>
+            The GetVisualChild.
+            </summary>
+            <param name="index">The index<see cref="T:System.Int32"/>.</param>
+            <returns>The <see cref="P:HexView.Wpf.HexViewer.CanvasVisualHost.Visual"/>.</returns>
+        </member>
+        <member name="T:HexView.Wpf.TextFormat">
+            <summary>
+            Enumerates the text section encodings/formats that the control is able to display.
+            </summary>
+        </member>
+        <member name="F:HexView.Wpf.TextFormat.Ascii">
+            <summary>
+            Display data in ASCII (ISO-8859-1) encoding.
+            </summary>
+        </member>
+        <member name="T:HexView.Wpf.Utilities">
+            <summary>
+            A utility class with miscellaneous methods.
+            </summary>
+        </member>
+        <member name="M:HexView.Wpf.Utilities.Clamp``1(``0,``0,``0)">
+             <summary>
+             Clamps the <paramref name="value"/> to the range [<paramref name="min"/>, <paramref name="max"/>].
+             </summary>
+            
+             <typeparam name="T">
+             The type of the value to clamp.
+             </typeparam>
+            
+             <param name="value">
+             The value to clamp.
+             </param>
+            
+             <param name="min">
+             The upper bound on the clamped value.
+             </param>
+            
+             <param name="max">
+             The lower bound on the clmaped value.
+             </param>
+            
+             <returns>
+             The nearest value of <paramref name="value"/> in the range [<paramref name="min"/>,
+             <paramref name="max"/>].
+             </returns>
+        </member>
+        <member name="M:HexView.Wpf.Utilities.Mod``1(``0,``0)">
+             <summary>
+             Calculates the arithmetic modulus of <paramref name="n"/> modulo <paramref name="m"/>.
+             </summary>
+            
+             <typeparam name="T">
+             The type of the values.
+             </typeparam>
+            
+             <param name="n">
+             The value to compute the modulus of.
+             </param>
+            
+             <param name="m">
+             The modulus.
+             </param>
+            
+             <returns>
+             The non-negative value <c>r</c> such that for some integral value <c>q</c>:
+             <c><paramref name="n"/> = q*m + r</c>.
+             </returns>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
+        </member>
+    </members>
+</doc>

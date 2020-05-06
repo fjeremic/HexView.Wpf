@@ -1,0 +1,401 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:HexView.Wpf"
+    xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime.Extensions"
+    xmlns:converters="clr-namespace:HexView.Wpf.Converters"
+    xmlns:system="clr-namespace:System;assembly=System.Memory">
+    
+    <Style TargetType="{x:Type local:HexViewer}">
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="FontFamily"
+                Value="Consolas"/>
+        <Setter Property="FontSize"
+                Value="13"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:HexViewer">
+                    <Grid FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Canvas Name="PART_Canvas" Background="{TemplateBinding Background}" Margin="5">
+                            <Canvas.ContextMenu>
+                                <ContextMenu>
+                                    <ContextMenu.Resources>
+                                        <converters:EqualityConverter x:Key="EqualityConverter"/>
+                                        <converters:MultiEqualityConverter x:Key="MultiEqualityConverter"/>
+                                    </ContextMenu.Resources>
+
+                                    <MenuItem Header="No Data" IsCheckable="True">
+                                        <MenuItem.IsChecked>
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ShowData" Converter="{StaticResource EqualityConverter}">
+                                                <Binding.ConverterParameter>
+                                                    <system:Boolean>
+                                                        false
+                                                    </system:Boolean>
+                                                </Binding.ConverterParameter>
+                                            </Binding>
+                                        </MenuItem.IsChecked>
+                                    </MenuItem>
+
+                                    <MenuItem Header="1-Byte Integer" IsCheckable="True">
+                                        <MenuItem.IsChecked>
+                                            <MultiBinding Converter="{StaticResource MultiEqualityConverter}">
+                                                <MultiBinding.ConverterParameter>
+                                                    <collections:ArrayList>
+                                                        <system:Boolean>
+                                                            true
+                                                        </system:Boolean>
+
+                                                        <local:DataType>
+                                                            Integer
+                                                        </local:DataType>
+
+                                                        <system:Int32>
+                                                            1
+                                                        </system:Int32>
+                                                    </collections:ArrayList>
+                                                </MultiBinding.ConverterParameter>
+
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ShowData"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataType"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataWidth"/>
+                                            </MultiBinding>
+                                        </MenuItem.IsChecked>
+                                    </MenuItem>
+
+                                    <MenuItem Header="2-Byte Integer" IsCheckable="True">
+                                        <MenuItem.IsChecked>
+                                            <MultiBinding Converter="{StaticResource MultiEqualityConverter}">
+                                                <MultiBinding.ConverterParameter>
+                                                    <collections:ArrayList>
+                                                        <system:Boolean>
+                                                            true
+                                                        </system:Boolean>
+
+                                                        <local:DataType>
+                                                            Integer
+                                                        </local:DataType>
+
+                                                        <system:Int32>
+                                                            2
+                                                        </system:Int32>
+                                                    </collections:ArrayList>
+                                                </MultiBinding.ConverterParameter>
+
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ShowData"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataType"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataWidth"/>
+                                            </MultiBinding>
+                                        </MenuItem.IsChecked>
+                                    </MenuItem>
+
+                                    <MenuItem Header="4-Byte Integer" IsCheckable="True">
+                                        <MenuItem.IsChecked>
+                                            <MultiBinding Converter="{StaticResource MultiEqualityConverter}">
+                                                <MultiBinding.ConverterParameter>
+                                                    <collections:ArrayList>
+                                                        <system:Boolean>
+                                                            true
+                                                        </system:Boolean>
+
+                                                        <local:DataType>
+                                                            Integer
+                                                        </local:DataType>
+
+                                                        <system:Int32>
+                                                            4
+                                                        </system:Int32>
+                                                    </collections:ArrayList>
+                                                </MultiBinding.ConverterParameter>
+
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ShowData"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataType"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataWidth"/>
+                                            </MultiBinding>
+                                        </MenuItem.IsChecked>
+                                    </MenuItem>
+
+                                    <MenuItem Header="8-Byte Integer" IsCheckable="True">
+                                        <MenuItem.IsChecked>
+                                            <MultiBinding Converter="{StaticResource MultiEqualityConverter}">
+                                                <MultiBinding.ConverterParameter>
+                                                    <collections:ArrayList>
+                                                        <system:Boolean>
+                                                            true
+                                                        </system:Boolean>
+
+                                                        <local:DataType>
+                                                            Integer
+                                                        </local:DataType>
+
+                                                        <system:Int32>
+                                                            8
+                                                        </system:Int32>
+                                                    </collections:ArrayList>
+                                                </MultiBinding.ConverterParameter>
+
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ShowData"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataType"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataWidth"/>
+                                            </MultiBinding>
+                                        </MenuItem.IsChecked>
+                                    </MenuItem>
+
+                                    <Separator/>
+
+                                    <MenuItem Header="32-bit Floating Point" IsCheckable="True">
+                                        <MenuItem.IsChecked>
+                                            <MultiBinding Converter="{StaticResource MultiEqualityConverter}">
+                                                <MultiBinding.ConverterParameter>
+                                                    <collections:ArrayList>
+                                                        <system:Boolean>
+                                                            true
+                                                        </system:Boolean>
+
+                                                        <local:DataType>
+                                                            FloatingPoint
+                                                        </local:DataType>
+
+                                                        <system:Int32>
+                                                            4
+                                                        </system:Int32>
+                                                    </collections:ArrayList>
+                                                </MultiBinding.ConverterParameter>
+
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ShowData"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataType"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataWidth"/>
+                                            </MultiBinding>
+                                        </MenuItem.IsChecked>
+                                    </MenuItem>
+
+                                    <MenuItem Header="64-bit Floating Point" IsCheckable="True">
+                                        <MenuItem.IsChecked>
+                                            <MultiBinding Converter="{StaticResource MultiEqualityConverter}">
+                                                <MultiBinding.ConverterParameter>
+                                                    <collections:ArrayList>
+                                                        <system:Boolean>
+                                                            true
+                                                        </system:Boolean>
+
+                                                        <local:DataType>
+                                                            FloatingPoint
+                                                        </local:DataType>
+
+                                                        <system:Int32>
+                                                            8
+                                                        </system:Int32>
+                                                    </collections:ArrayList>
+                                                </MultiBinding.ConverterParameter>
+
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ShowData"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataType"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataWidth"/>
+                                            </MultiBinding>
+                                        </MenuItem.IsChecked>
+                                    </MenuItem>
+
+                                    <Separator/>
+
+                                    <MenuItem Header="Decimal" IsCheckable="True">
+                                        <MenuItem.IsChecked>
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataFormat" Converter="{StaticResource EqualityConverter}">
+                                                <Binding.ConverterParameter>
+                                                    <local:DataFormat>
+                                                        Decimal
+                                                    </local:DataFormat>
+                                                </Binding.ConverterParameter>
+                                            </Binding>
+                                        </MenuItem.IsChecked>
+
+                                        <MenuItem.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource MultiEqualityConverter}">
+                                                <MultiBinding.ConverterParameter>
+                                                    <collections:ArrayList>
+                                                        <system:Boolean>
+                                                            true
+                                                        </system:Boolean>
+
+                                                        <local:DataType>
+                                                            Integer
+                                                        </local:DataType>
+                                                    </collections:ArrayList>
+                                                </MultiBinding.ConverterParameter>
+
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ShowData"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataType"/>
+                                            </MultiBinding>
+                                        </MenuItem.IsEnabled>
+                                    </MenuItem>
+
+                                    <MenuItem Header="Hexadecimal" IsCheckable="True">
+                                        <MenuItem.IsChecked>
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataFormat" Converter="{StaticResource EqualityConverter}">
+                                                <Binding.ConverterParameter>
+                                                    <local:DataFormat>
+                                                        Hexadecimal
+                                                    </local:DataFormat>
+                                                </Binding.ConverterParameter>
+                                            </Binding>
+                                        </MenuItem.IsChecked>
+
+                                        <MenuItem.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource MultiEqualityConverter}">
+                                                <MultiBinding.ConverterParameter>
+                                                    <collections:ArrayList>
+                                                        <system:Boolean>
+                                                            true
+                                                        </system:Boolean>
+
+                                                        <local:DataType>
+                                                            Integer
+                                                        </local:DataType>
+                                                    </collections:ArrayList>
+                                                </MultiBinding.ConverterParameter>
+
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ShowData"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataType"/>
+                                            </MultiBinding>
+                                        </MenuItem.IsEnabled>
+                                    </MenuItem>
+
+                                    <Separator/>
+
+                                    <MenuItem Header="Signed" IsCheckable="True">
+                                        <MenuItem.IsChecked>
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataSignedness" Converter="{StaticResource EqualityConverter}">
+                                                <Binding.ConverterParameter>
+                                                    <local:DataSignedness>
+                                                        Signed
+                                                    </local:DataSignedness>
+                                                </Binding.ConverterParameter>
+                                            </Binding>
+                                        </MenuItem.IsChecked>
+
+                                        <MenuItem.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource MultiEqualityConverter}">
+                                                <MultiBinding.ConverterParameter>
+                                                    <collections:ArrayList>
+                                                        <system:Boolean>
+                                                            true
+                                                        </system:Boolean>
+
+                                                        <local:DataType>
+                                                            Integer
+                                                        </local:DataType>
+
+                                                        <local:DataFormat>
+                                                            Decimal
+                                                        </local:DataFormat>
+                                                    </collections:ArrayList>
+                                                </MultiBinding.ConverterParameter>
+
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ShowData"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataType"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataFormat"/>
+                                            </MultiBinding>
+                                        </MenuItem.IsEnabled>
+                                    </MenuItem>
+
+                                    <MenuItem Header="Unsigned" IsCheckable="True">
+                                        <MenuItem.IsChecked>
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataSignedness" Converter="{StaticResource EqualityConverter}">
+                                                <Binding.ConverterParameter>
+                                                    <local:DataSignedness>
+                                                        Unsigned
+                                                    </local:DataSignedness>
+                                                </Binding.ConverterParameter>
+                                            </Binding>
+                                        </MenuItem.IsChecked>
+
+                                        <MenuItem.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource MultiEqualityConverter}">
+                                                <MultiBinding.ConverterParameter>
+                                                    <collections:ArrayList>
+                                                        <system:Boolean>
+                                                            true
+                                                        </system:Boolean>
+
+                                                        <local:DataType>
+                                                            Integer
+                                                        </local:DataType>
+
+                                                        <local:DataFormat>
+                                                            Decimal
+                                                        </local:DataFormat>
+                                                    </collections:ArrayList>
+                                                </MultiBinding.ConverterParameter>
+
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ShowData"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataType"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataFormat"/>
+                                            </MultiBinding>
+                                        </MenuItem.IsEnabled>
+                                    </MenuItem>
+
+                                    <Separator/>
+
+                                    <MenuItem Header="No Text" IsCheckable="True">
+                                        <MenuItem.IsChecked>
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ShowText" Converter="{StaticResource EqualityConverter}">
+                                                <Binding.ConverterParameter>
+                                                    <system:Boolean>
+                                                        false
+                                                    </system:Boolean>
+                                                </Binding.ConverterParameter>
+                                            </Binding>
+                                        </MenuItem.IsChecked>
+                                    </MenuItem>
+
+                                    <MenuItem Header="ASCII" IsCheckable="True">
+                                        <MenuItem.IsChecked>
+                                            <MultiBinding Converter="{StaticResource MultiEqualityConverter}">
+                                                <MultiBinding.ConverterParameter>
+                                                    <collections:ArrayList>
+                                                        <system:Boolean>
+                                                            true
+                                                        </system:Boolean>
+
+                                                        <local:TextFormat>
+                                                            Ascii
+                                                        </local:TextFormat>
+                                                    </collections:ArrayList>
+                                                </MultiBinding.ConverterParameter>
+
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ShowText"/>
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="TextFormat"/>
+                                            </MultiBinding>
+                                        </MenuItem.IsChecked>
+                                    </MenuItem>
+
+                                    <Separator/>
+
+                                    <MenuItem Header="Copy">
+                                        <MenuItem.Command>
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="CopyCommand"/>
+                                        </MenuItem.Command>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Canvas.ContextMenu>
+                        </Canvas>
+
+                        <ScrollBar Name="PART_VerticalScrollBar" Grid.Column="1"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

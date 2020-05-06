@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexView.Wpf", "HexView.Wpf\HexView.Wpf.csproj", "{2CB8E7C9-895D-4E4C-BC26-5E8FA1370B74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexView.Wpf.Demo", "HexView.Wpf.Demo\HexView.Wpf.Demo.csproj", "{8E1FA27D-1DC3-462C-B257-4342621B5DCD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CB8E7C9-895D-4E4C-BC26-5E8FA1370B74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CB8E7C9-895D-4E4C-BC26-5E8FA1370B74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CB8E7C9-895D-4E4C-BC26-5E8FA1370B74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CB8E7C9-895D-4E4C-BC26-5E8FA1370B74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E1FA27D-1DC3-462C-B257-4342621B5DCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E1FA27D-1DC3-462C-B257-4342621B5DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E1FA27D-1DC3-462C-B257-4342621B5DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E1FA27D-1DC3-462C-B257-4342621B5DCD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {263C31D3-3735-4C85-B76D-077E63473FF5}
+	EndGlobalSection
+EndGlobal

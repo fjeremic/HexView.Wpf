@@ -1,0 +1,62 @@
+trigger:
+  branches:
+    include:
+    - master
+  tags:
+    include:
+    - ?.?.?
+
+pr:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+jobs:
+- job: CI
+  displayName: 'Continuous Integration'
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: Restore
+    inputs:
+      command: 'restore'
+      feedsToUse: 'select'
+
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      command: 'build'
+      projects: '**/*.csproj'
+      configuration: '$(buildConfiguration)'
+
+  - task: DotNetCoreCLI@2
+    displayName: Test
+    inputs:
+      command: 'test'
+      projects: '**/*.csproj'
+      configuration: '$(buildConfiguration)'
+
+- job: CD
+  displayName: 'Continuous Deployment'
+  dependsOn: CI
+  condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: 'Pack'
+    inputs:
+      command: 'pack'
+      packagesToPack: '**/*.csproj;!**/*.Tests.csproj'
+      configuration: '$(buildConfiguration)'
+      includesymbols: true
+      includesource: true
+      versioningScheme: 'off'
+
+  - task: NuGetCommand@2
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+      nuGetFeedType: 'external'
+      publishFeedCredentials: 'NuGetConnection'
