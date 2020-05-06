@@ -5,7 +5,7 @@
 A WPF control for displaying binary data in a traditional hex view.
 
 <p align="center">
- <img align="center" alt="HexViewer demo project" src="https://user-images.githubusercontent.com/16259104/81234100-195c5700-8fc6-11ea-8f30-3d486b4db6a0.png"/>
+ <img align="center" alt="HexViewer demo project" src="https://raw.githubusercontent.com/fjeremic/HexView.Wpf/assets/HexViewer.png"/>
 </p>
 
 ## Installing / Getting started
@@ -39,17 +39,17 @@ dotnet build
 These screenshots were generated using the demo application found in the [HexView.Wpf.Demo](/HexView.Wpf.Demo) project of this repository which uses the control to implement a simple file hex viewer application.
 
 <p align="center">
-  <img align="center" src="https://user-images.githubusercontent.com/16259104/81235055-0f3b5800-8fc8-11ea-93f8-74535bd0ead2.gif"/>
+  <img align="center" src="https://raw.githubusercontent.com/fjeremic/HexView.Wpf/assets/HexViewResize.gif"/>
 </p>
 <p align="center">
-  <img align="center" src="https://user-images.githubusercontent.com/16259104/81234300-807a0b80-8fc6-11ea-9b36-02aa74be4c83.png"/>
+  <img align="center" src="https://raw.githubusercontent.com/fjeremic/HexView.Wpf/assets/HexViewerContextMenu.png"/>
 </p>
 <p align="center">
-  <img align="center" src="https://user-images.githubusercontent.com/16259104/81234315-88d24680-8fc6-11ea-9c7d-a961ca995cf3.png"/> 
+  <img align="center" src="https://raw.githubusercontent.com/fjeremic/HexView.Wpf/assets/HexViewerLongSelected.png"/> 
 </p>
 <p align="center">
-  <img align="center" src="https://user-images.githubusercontent.com/16259104/81234349-92f44500-8fc6-11ea-9dc7-bf24c1fc4a4b.png"/>
+  <img align="center" src="https://raw.githubusercontent.com/fjeremic/HexView.Wpf/assets/HexViewerSignedShort.png"/>
 </p>
 <p align="center">
-  <img align="center" src="https://user-images.githubusercontent.com/16259104/81234367-9a1b5300-8fc6-11ea-8e75-0eade884bc9b.png"/> 
+  <img align="center" src="https://raw.githubusercontent.com/fjeremic/HexView.Wpf/assets/HexViewerTextOnly.png"/> 
 </p>
