@@ -6,7 +6,7 @@ A WPF control for displaying binary data in a traditional hex view.
 
 <br/>
 <p align="center">
- <img align="center" alt="HexViewer demo project" src="https://raw.githubusercontent.com/fjeremic/HexView.Wpf/assets/HexViewer.png"/>
+  <img align="center" alt="HexViewer demo project" src="https://raw.githubusercontent.com/fjeremic/HexView.Wpf/assets/HexViewer.png"/>
 </p>
 <br/>
 
