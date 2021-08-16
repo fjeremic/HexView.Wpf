@@ -12,6 +12,8 @@
     using System.Windows.Input;
     using System.Windows.Media;
 
+    using BinaryTools.Elf.Io;
+
     /// <summary>
     /// Represents a control designed to display a classical hexadecimal viewer.
     /// </summary>
@@ -34,6 +36,13 @@
                 new FrameworkPropertyMetadata(SystemColors.HotTrackBrush, OnPropertyChangedInvalidateVisual));
 
         /// <summary>
+        /// Defines the width of the addresses displayed in the address section of the control.
+        /// </summary>
+        public static readonly DependencyProperty AddressFormatProperty =
+            DependencyProperty.Register(nameof(AddressFormat), typeof(AddressFormat), typeof(HexViewer),
+                new FrameworkPropertyMetadata(AddressFormat.Address32, OnPropertyChangedInvalidateVisual));
+
+        /// <summary>
         ///  Defines the brush used for alternating for text in alternating (odd numbered) columns in the data section of the control.
         /// </summary>
         public static readonly DependencyProperty AlternatingDataColumnTextBrushProperty =
@@ -46,6 +55,13 @@
         public static readonly DependencyProperty ColumnsProperty =
             DependencyProperty.Register(nameof(Columns), typeof(int), typeof(HexViewer),
                 new FrameworkPropertyMetadata(16, OnPropertyChangedInvalidateVisual, CoerceColumns));
+
+        /// <summary>
+        /// Defines the endianness used to interpret the data.
+        /// </summary>
+        public static readonly DependencyProperty EndiannessProperty =
+            DependencyProperty.Register(nameof(Endianness), typeof(Endianness), typeof(HexViewer),
+                new FrameworkPropertyMetadata(Endianness.BigEndian, OnPropertyChangedInvalidateVisual));
 
         /// <summary>
         /// Defines the format of the data to display.
@@ -265,6 +281,16 @@
         }
 
         /// <summary>
+        /// Gets or sets the endianness used to interpret the data.
+        /// </summary>
+        public Endianness Endianness
+        {
+            get => (Endianness)GetValue(EndiannessProperty);
+
+            set => SetValue(EndiannessProperty, value);
+        }
+
+        /// <summary>
         /// Gets or sets the format of the data to display.
         /// </summary>
         public DataFormat DataFormat
@@ -448,6 +474,16 @@
         }
 
         /// <summary>
+        /// Gets or sets the width of the addresses displayed in the address section of the control.
+        /// </summary>
+        public AddressFormat AddressFormat
+        {
+            get => (AddressFormat)GetValue(AddressFormatProperty);
+
+            set => SetValue(AddressFormatProperty, value);
+        }
+
+        /// <summary>
         /// Gets or sets the format of the text to display in the text section.
         /// </summary>
         public TextFormat TextFormat
@@ -580,9 +616,9 @@
 
                             e.Handled = true;
                         }
-                    }
 
-                    break;
+                        break;
+                    }
 
                     case Key.C:
                     {
@@ -590,9 +626,9 @@
                         {
                             e.Handled = true;
                         }
-                    }
 
-                    break;
+                        break;
+                    }
 
                     case Key.Down:
                     {
@@ -609,9 +645,9 @@
                         ScrollToOffset(SelectionEnd - BytesPerColumn);
 
                         e.Handled = true;
-                    }
 
-                    break;
+                        break;
+                    }
 
                     case Key.End:
                     {
@@ -639,9 +675,9 @@
                         }
 
                         e.Handled = true;
-                    }
 
-                    break;
+                        break;
+                    }
 
                     case Key.Home:
                     {
@@ -676,9 +712,9 @@
                         }
 
                         e.Handled = true;
-                    }
 
-                    break;
+                        break;
+                    }
 
                     case Key.Left:
                     {
@@ -695,9 +731,9 @@
                         ScrollToOffset(SelectionEnd - BytesPerColumn);
 
                         e.Handled = true;
-                    }
 
-                    break;
+                        break;
+                    }
 
                     case Key.PageDown:
                     {
@@ -720,9 +756,8 @@
                         }
 
                         e.Handled = true;
+                        break;
                     }
-
-                    break;
 
                     case Key.PageUp:
                     {
@@ -746,9 +781,8 @@
                         }
 
                         e.Handled = true;
+                        break;
                     }
-
-                    break;
 
                     case Key.Right:
                     {
@@ -765,9 +799,8 @@
                         ScrollToOffset(SelectionEnd - BytesPerColumn);
 
                         e.Handled = true;
+                        break;
                     }
-
-                    break;
 
                     case Key.Up:
                     {
@@ -784,9 +817,8 @@
                         ScrollToOffset(SelectionEnd - BytesPerColumn);
 
                         e.Handled = true;
+                        break;
                     }
-
-                    break;
                 }
             }
         }
@@ -883,9 +915,9 @@
                     {
                         SelectionEnd = currentMouseOverOffset;
                     }
-                }
 
-                break;
+                    break;
+                }
             }
         }
 
@@ -1028,12 +1060,8 @@
                         {
                             if (DataSource.BaseStream.Position + BytesPerColumn <= DataSource.BaseStream.Length)
                             {
-                                ulong ho32Bit = (Address + (ulong)DataSource.BaseStream.Position) >> 32;
-                                ulong lo32Bit = (Address + (ulong)DataSource.BaseStream.Position) & 0xFFFFFFFF;
-
-                                var textToFormat = $"{ho32Bit,0:X8}:{lo32Bit,0:X8}";
+                                var textToFormat = GetFormattedAddressText(Address + (ulong)DataSource.BaseStream.Position);
                                 var formattedText = new FormattedText(textToFormat, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, cachedTypeface, FontSize, AddressBrush, 1.0);
-
                                 drawingContext.DrawText(formattedText, origin);
 
                                 origin.X += (CalculateAddressColumnCharWidth() + CharsBetweenSections) * cachedFormattedChar.Width;
@@ -1421,17 +1449,13 @@
             switch ((int)value)
             {
                 case 1:
-
                 case 2:
-
                 case 4:
-
                 case 8:
                 {
                     result = true;
+                    break;
                 }
-
-                break;
             }
 
             return result;
@@ -1505,9 +1529,9 @@
                             builder.Append('.');
                         }
                     }
-                }
 
-                break;
+                    break;
+                }
 
                 default:
                 {
@@ -1539,39 +1563,35 @@
                                         case 1:
                                         {
                                             result = $"{DataSource.ReadSByte():+#;-#;0}".PadLeft(4);
+                                            break;
                                         }
-
-                                        break;
 
                                         case 2:
                                         {
-                                            result = $"{DataSource.ReadInt16():+#;-#;0}".PadLeft(6);
+                                            result = $"{EndianBitConverter.Convert(DataSource.ReadInt16(), Endianness):+#;-#;0}".PadLeft(6);
+                                            break;
                                         }
-
-                                        break;
 
                                         case 4:
                                         {
-                                            result = $"{DataSource.ReadInt32():+#;-#;0}".PadLeft(11);
+                                            result = $"{EndianBitConverter.Convert(DataSource.ReadInt32(), Endianness):+#;-#;0}".PadLeft(11);
+                                            break;
                                         }
-
-                                        break;
 
                                         case 8:
                                         {
-                                            result = $"{DataSource.ReadInt64():+#;-#;0}".PadLeft(21);
+                                            result = $"{EndianBitConverter.Convert(DataSource.ReadInt64(), Endianness):+#;-#;0}".PadLeft(21);
+                                            break;
                                         }
-
-                                        break;
 
                                         default:
                                         {
                                             throw new InvalidOperationException($"Invalid {nameof(DataWidth)} value.");
                                         }
                                     }
-                                }
 
-                                break;
+                                    break;
+                                }
 
                                 case DataSignedness.Unsigned:
                                 {
@@ -1580,48 +1600,44 @@
                                         case 1:
                                         {
                                             result = $"{DataSource.ReadByte()}".PadLeft(3);
+                                            break;
                                         }
-
-                                        break;
 
                                         case 2:
                                         {
-                                            result = $"{DataSource.ReadUInt16()}".PadLeft(5);
+                                            result = $"{EndianBitConverter.Convert(DataSource.ReadUInt16(), Endianness)}".PadLeft(5);
+                                            break;
                                         }
-
-                                        break;
 
                                         case 4:
                                         {
-                                            result = $"{DataSource.ReadUInt32()}".PadLeft(10);
+                                            result = $"{EndianBitConverter.Convert(DataSource.ReadUInt32(), Endianness)}".PadLeft(10);
+                                            break;
                                         }
-
-                                        break;
 
                                         case 8:
                                         {
-                                            result = $"{DataSource.ReadUInt64()}".PadLeft(20);
+                                            result = $"{EndianBitConverter.Convert(DataSource.ReadUInt64(), Endianness)}".PadLeft(20);
+                                            break;
                                         }
-
-                                        break;
 
                                         default:
                                         {
                                             throw new InvalidOperationException($"Invalid {nameof(DataWidth)} value.");
                                         }
                                     }
-                                }
 
-                                break;
+                                    break;
+                                }
 
                                 default:
                                 {
                                     throw new InvalidOperationException($"Invalid {nameof(DataType)} value.");
                                 }
                             }
-                        }
 
-                        break;
+                            break;
+                        }
 
                         case DataFormat.Hexadecimal:
                         {
@@ -1630,48 +1646,44 @@
                                 case 1:
                                 {
                                     result = $"{DataSource.ReadByte(),0:X2}";
+                                    break;
                                 }
-
-                                break;
 
                                 case 2:
                                 {
-                                    result = $"{DataSource.ReadUInt16(),0:X4}";
+                                    result = $"{EndianBitConverter.Convert(DataSource.ReadUInt16(), Endianness),0:X4}";
+                                    break;
                                 }
-
-                                break;
 
                                 case 4:
                                 {
-                                    result = $"{DataSource.ReadUInt32(),0:X8}";
+                                    result = $"{EndianBitConverter.Convert(DataSource.ReadUInt32(), Endianness),0:X8}";
+                                    break;
                                 }
-
-                                break;
 
                                 case 8:
                                 {
-                                    result = $"{DataSource.ReadUInt64(),0:X16}";
+                                    result = $"{EndianBitConverter.Convert(DataSource.ReadUInt64(), Endianness),0:X16}";
+                                    break;
                                 }
-
-                                break;
 
                                 default:
                                 {
                                     throw new InvalidOperationException($"Invalid {nameof(DataWidth)} value.");
                                 }
                             }
-                        }
 
-                        break;
+                            break;
+                        }
 
                         default:
                         {
                             throw new InvalidOperationException($"Invalid {nameof(DataFormat)} value.");
                         }
                     }
-                }
 
-                break;
+                    break;
+                }
 
                 case DataType.FloatingPoint:
                 {
@@ -1679,34 +1691,28 @@
                     {
                         case 4:
                         {
-                            var bytes = BitConverter.GetBytes(DataSource.ReadUInt32());
-
+                            var bytes = BitConverter.GetBytes(EndianBitConverter.Convert(DataSource.ReadUInt32(), Endianness));
                             var value = BitConverter.ToSingle(bytes, 0);
-
                             result = $"{value:E08}".PadLeft(16);
+                            break;
                         }
-
-                        break;
 
                         case 8:
                         {
-                            var bytes = BitConverter.GetBytes(DataSource.ReadUInt64());
-
+                            var bytes = BitConverter.GetBytes(EndianBitConverter.Convert(DataSource.ReadUInt64(), Endianness));
                             var value = BitConverter.ToSingle(bytes, 0);
-
                             result = $"{value:E16}".PadLeft(24);
+                            break;
                         }
-
-                        break;
 
                         default:
                         {
                             throw new InvalidOperationException($"Invalid {nameof(DataWidth)} value.");
                         }
                     }
-                }
 
-                break;
+                    break;
+                }
 
                 default:
                 {
@@ -1748,10 +1754,94 @@
             InvalidateVisual();
         }
 
+        private string GetFormattedAddressText(ulong address)
+        {
+            string formattedAddressText;
+
+            switch (AddressFormat)
+            {
+                case AddressFormat.Address16:
+                {
+                    formattedAddressText = $"{address & 0xFFFF,0:X4}";
+                    break;
+                }
+
+                case AddressFormat.Address24:
+                {
+                    formattedAddressText = $"{(address >> 16) & 0xFF,0:X2}:{address & 0xFFFF,0:X4}";
+                    break;
+                }
+
+                case AddressFormat.Address32:
+                {
+                    formattedAddressText = $"{(address >> 16) & 0xFFFF,0:X4}:{address & 0xFFFF,0:X4}";
+                    break;
+                }
+
+                case AddressFormat.Address48:
+                {
+                    formattedAddressText = $"{(address >> 32) & 0xFF,0:X4}:{address & 0xFFFFFFFF,0:X8}";
+                    break;
+                }
+
+                case AddressFormat.Address64:
+                {
+                    formattedAddressText = $"{address >> 32,0:X8}:{address & 0xFFFFFFFF,0:X8}";
+                    break;
+                }
+
+                default:
+                {
+                    throw new InvalidOperationException($"Invalid {nameof(AddressFormat)} value.");
+                }
+            }
+
+            return formattedAddressText;
+        }
+
         private int CalculateAddressColumnCharWidth()
         {
-            // "00000000:00000000".Length
-            return 17;
+            int addressColumnCharWidth;
+
+            switch (AddressFormat)
+            {
+                case AddressFormat.Address16:
+                {
+                    addressColumnCharWidth = 4;
+                    break;
+                }
+
+                case AddressFormat.Address24:
+                {
+                    addressColumnCharWidth = 7;
+                    break;
+                }
+
+                case AddressFormat.Address32:
+                {
+                    addressColumnCharWidth = 9;
+                    break;
+                }
+
+                case AddressFormat.Address48:
+                {
+                    addressColumnCharWidth = 13;
+                    break;
+                }
+
+                case AddressFormat.Address64:
+                {
+                    addressColumnCharWidth = 17;
+                    break;
+                }
+
+                default:
+                {
+                    throw new InvalidOperationException($"Invalid {nameof(AddressFormat)} value.");
+                }
+            }
+
+            return addressColumnCharWidth;
         }
 
         private int CalculateDataColumnCharWidth()
@@ -1775,30 +1865,26 @@
                                         case 1:
                                         {
                                             dataColumnCharWidth = 4;
+                                            break;
                                         }
-
-                                        break;
 
                                         case 2:
                                         {
                                             dataColumnCharWidth = 6;
+                                            break;
                                         }
-
-                                        break;
 
                                         case 4:
                                         {
                                             dataColumnCharWidth = 11;
+                                            break;
                                         }
-
-                                        break;
 
                                         case 8:
                                         {
                                             dataColumnCharWidth = 21;
+                                            break;
                                         }
-
-                                        break;
 
                                         default:
                                         {
@@ -1816,30 +1902,26 @@
                                         case 1:
                                         {
                                             dataColumnCharWidth = 3;
+                                            break;
                                         }
-
-                                        break;
 
                                         case 2:
                                         {
                                             dataColumnCharWidth = 5;
+                                            break;
                                         }
-
-                                        break;
 
                                         case 4:
                                         {
                                             dataColumnCharWidth = 10;
+                                            break;
                                         }
-
-                                        break;
 
                                         case 8:
                                         {
                                             dataColumnCharWidth = 20;
+                                            break;
                                         }
-
-                                        break;
 
                                         default:
                                         {
@@ -1864,26 +1946,22 @@
                             switch (DataWidth)
                             {
                                 case 1:
-
                                 case 2:
-
                                 case 4:
-
                                 case 8:
                                 {
                                     dataColumnCharWidth = 2 * DataWidth;
+                                    break;
                                 }
-
-                                break;
 
                                 default:
                                 {
                                     throw new InvalidOperationException($"Invalid {nameof(DataWidth)} value.");
                                 }
                             }
-                        }
 
-                        break;
+                            break;
+                        }
 
                         default:
                         {
@@ -1901,16 +1979,14 @@
                         case 4:
                         {
                             dataColumnCharWidth = 16;
+                            break;
                         }
-
-                        break;
 
                         case 8:
                         {
                             dataColumnCharWidth = 24;
+                            break;
                         }
-
-                        break;
 
                         default:
                         {
@@ -2290,6 +2366,9 @@
 
             MaxVisibleRows = maxVisibleRows;
             MaxVisibleColumns = maxVisibleColumns;
+
+            // Maximum visible rows has now changed and so we must update the maximum amount we should scroll by
+            verticalScrollBar.LargeChange = maxVisibleRows;
         }
 
         private void UpdateScrollBar()
