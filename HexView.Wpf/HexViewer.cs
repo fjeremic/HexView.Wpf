@@ -2350,6 +2350,7 @@
 
             MaxVisibleRows = maxVisibleRows;
             MaxVisibleColumns = maxVisibleColumns;
+            verticalScrollBar.LargeChange = maxVisibleRows;
         }
 
         private void UpdateScrollBar()
