@@ -48,6 +48,13 @@
                 new FrameworkPropertyMetadata(16, OnPropertyChangedInvalidateVisual, CoerceColumns));
 
         /// <summary>
+        ///  Defines the Endian (Big or Little) of the data in the stream
+        /// </summary>
+        public static readonly DependencyProperty DataEndianProperty =
+            DependencyProperty.Register(nameof(DataEndian), typeof(DataEndianess), typeof(HexViewer),
+                new FrameworkPropertyMetadata(DataEndianess.Big, OnPropertyChangedInvalidateVisual));
+
+        /// <summary>
         /// Defines the format of the data to display.
         /// </summary>
         public static readonly DependencyProperty DataFormatProperty =
@@ -262,6 +269,16 @@
             get => (int)GetValue(ColumnsProperty);
 
             set => SetValue(ColumnsProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the Endian of the data in the stream.
+        /// </summary>
+        public DataEndianess DataEndian
+        {
+            get => (DataEndianess)GetValue(DataEndianProperty);
+
+            set => SetValue(DataEndianProperty, value);
         }
 
         /// <summary>
@@ -1545,21 +1562,21 @@
 
                                         case 2:
                                         {
-                                            result = $"{DataSource.ReadInt16():+#;-#;0}".PadLeft(6);
+                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadInt16():+#;-#;0}".PadLeft(6) : $"{DataSource.ReadInt16BE():+#;-#;0}".PadLeft(6);
                                         }
 
                                         break;
 
                                         case 4:
                                         {
-                                            result = $"{DataSource.ReadInt32():+#;-#;0}".PadLeft(11);
+                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadInt32():+#;-#;0}".PadLeft(11) : $"{DataSource.ReadInt32BE():+#;-#;0}".PadLeft(11);
                                         }
 
                                         break;
 
                                         case 8:
                                         {
-                                            result = $"{DataSource.ReadInt64():+#;-#;0}".PadLeft(21);
+                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadInt64():+#;-#;0}".PadLeft(21) : $"{DataSource.ReadInt64BE():+#;-#;0}".PadLeft(21);
                                         }
 
                                         break;
@@ -1586,21 +1603,21 @@
 
                                         case 2:
                                         {
-                                            result = $"{DataSource.ReadUInt16()}".PadLeft(5);
+                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt16()}".PadLeft(5) : $"{DataSource.ReadUInt16BE()}".PadLeft(5);
                                         }
 
                                         break;
 
                                         case 4:
                                         {
-                                            result = $"{DataSource.ReadUInt32()}".PadLeft(10);
+                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt32()}".PadLeft(10) : $"{DataSource.ReadUInt32BE()}".PadLeft(10);
                                         }
 
                                         break;
 
                                         case 8:
                                         {
-                                            result = $"{DataSource.ReadUInt64()}".PadLeft(20);
+                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt64()}".PadLeft(20) : $"{DataSource.ReadUInt64BE()}".PadLeft(20);
                                         }
 
                                         break;
@@ -1636,21 +1653,21 @@
 
                                 case 2:
                                 {
-                                    result = $"{DataSource.ReadUInt16(),0:X4}";
+                                    result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt16(),0:X4}" : $"{DataSource.ReadUInt16BE(),0:X4}";
                                 }
 
                                 break;
 
                                 case 4:
                                 {
-                                    result = $"{DataSource.ReadUInt32(),0:X8}";
+                                    result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt32(),0:X8}" : $"{DataSource.ReadUInt32BE(),0:X8}";
                                 }
 
                                 break;
 
                                 case 8:
                                 {
-                                    result = $"{DataSource.ReadUInt64(),0:X16}";
+                                    result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt64(),0:X16}" : $"{DataSource.ReadUInt64BE(),0:X16}";
                                 }
 
                                 break;
@@ -1679,22 +1696,14 @@
                     {
                         case 4:
                         {
-                            var bytes = BitConverter.GetBytes(DataSource.ReadUInt32());
-
-                            var value = BitConverter.ToSingle(bytes, 0);
-
-                            result = $"{value:E08}".PadLeft(16);
+                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadFloat(),0:E08}".PadLeft(16) : $"{DataSource.ReadFloatBE(),0:E08}".PadLeft(16);
                         }
 
                         break;
 
                         case 8:
                         {
-                            var bytes = BitConverter.GetBytes(DataSource.ReadUInt64());
-
-                            var value = BitConverter.ToSingle(bytes, 0);
-
-                            result = $"{value:E16}".PadLeft(24);
+                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadDouble(),0:E16}".PadLeft(24) : $"{DataSource.ReadDoubleBE(),0:E16}".PadLeft(24);
                         }
 
                         break;
