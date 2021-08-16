@@ -34,6 +34,14 @@
                 new FrameworkPropertyMetadata(SystemColors.HotTrackBrush, OnPropertyChangedInvalidateVisual));
 
         /// <summary>
+        /// Determines the width of the address section of the control (16, 24, 32, 48, 64 bit).
+        /// <br/>--Currently defaulted to 32 bit, set default here as needed.
+        /// </summary>
+        public static readonly DependencyProperty AddressDisplayFormatProperty =
+            DependencyProperty.Register(nameof(AddressDisplayFormat), typeof(AddressDisplayFormat), typeof(HexViewer),
+                new FrameworkPropertyMetadata(AddressDisplayFormat.Addr32, OnPropertyChangedInvalidateVisual));
+
+        /// <summary>
         ///  Defines the brush used for alternating for text in alternating (odd numbered) columns in the data section of the control.
         /// </summary>
         public static readonly DependencyProperty AlternatingDataColumnTextBrushProperty =
@@ -462,6 +470,16 @@
             get => (bool)GetValue(ShowTextProperty);
 
             set => SetValue(ShowTextProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating if the address is in short or long format
+        /// </summary>
+        public AddressDisplayFormat AddressDisplayFormat
+        {
+            get => (AddressDisplayFormat)GetValue(AddressDisplayFormatProperty);
+
+            set => SetValue(AddressDisplayFormatProperty, value);
         }
 
         /// <summary>
@@ -1045,10 +1063,9 @@
                         {
                             if (DataSource.BaseStream.Position + BytesPerColumn <= DataSource.BaseStream.Length)
                             {
-                                ulong ho32Bit = (Address + (ulong)DataSource.BaseStream.Position) >> 32;
-                                ulong lo32Bit = (Address + (ulong)DataSource.BaseStream.Position) & 0xFFFFFFFF;
+                                // changed to display multiple address formats.
+                                var textToFormat = GetFormattedAddressText(Address + (ulong)DataSource.BaseStream.Position);
 
-                                var textToFormat = $"{ho32Bit,0:X8}:{lo32Bit,0:X8}";
                                 var formattedText = new FormattedText(textToFormat, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, cachedTypeface, FontSize, AddressBrush, 1.0);
 
                                 drawingContext.DrawText(formattedText, origin);
@@ -1759,8 +1776,42 @@
 
         private int CalculateAddressColumnCharWidth()
         {
-            // "00000000:00000000".Length
-            return 17;
+            switch (AddressDisplayFormat)
+            {
+                case AddressDisplayFormat.Addr16: return 4;
+                case AddressDisplayFormat.Addr24: return 7;
+                case AddressDisplayFormat.Addr32: return 9;
+                case AddressDisplayFormat.Addr48: return 13;
+                case AddressDisplayFormat.Addr64: return 17;
+                default:
+                    throw new InvalidOperationException($"Invalid {nameof(AddressDisplayFormat)} value.");
+            }
+        }
+
+        private string GetFormattedAddressText(ulong addr64)
+        {
+            // Precalculation is occasionally slower then the IF-ELSE construction but a lot easier to maintain
+            ulong ho64Bit = addr64 >> 32;                   // high order 4 bytes of 64-bit address xxxxxxxx:00000000
+            ulong lo64Bit = addr64 & 0xFFFFFFFF;            // low order 4 bytes of 64-bit address  00000000:xxxxxxxx
+
+            ulong ho32Bit = (addr64 >> 16) & 0xFFFF;        // high order 2 bytes of 32-bit address 00000000:xxxx0000
+            ulong lo32Bit = addr64 & 0xFFFF;                // low order  2 bytes of 32-bit address 00000000:0000xxxx
+
+            ulong ho48Bit = (addr64 >> 32) & 0xFF;          // high-order byte of 48-bit address    000000xx:00000000
+            ulong ho24Bit = (addr64 >> 16) & 0xFF;          // high-order byte of 24-bit address    00000000:00xx0000
+
+            ulong hl16Bit = addr64 & 0xFFFF;                // full 16-bit address                  00000000:0000xxxx
+
+            switch (AddressDisplayFormat)
+            {
+                case AddressDisplayFormat.Addr16: return $"{hl16Bit,0:X4}";
+                case AddressDisplayFormat.Addr24: return $"{ho24Bit,0:X2}:{hl16Bit,0:X4}";
+                case AddressDisplayFormat.Addr32: return $"{ho32Bit,0:X4}:{lo32Bit,0:X4}";
+                case AddressDisplayFormat.Addr48: return $"{ho48Bit,0:X4}:{lo64Bit,0:X8}";
+                case AddressDisplayFormat.Addr64: return $"{ho64Bit,0:X8}:{lo64Bit,0:X8}";
+                default:
+                    throw new InvalidOperationException($"Invalid {nameof(AddressDisplayFormat)} value.");
+            }
         }
 
         private int CalculateDataColumnCharWidth()
