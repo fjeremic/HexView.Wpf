@@ -4,7 +4,7 @@
     xmlns:local="clr-namespace:HexView.Wpf"
     xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime.Extensions"
     xmlns:converters="clr-namespace:HexView.Wpf.Converters"
-    xmlns:system="clr-namespace:System;assembly=System.Memory">
+    xmlns:system="clr-namespace:System;assembly=System.Memory" >
     
     <Style TargetType="{x:Type local:HexViewer}">
         <Setter Property="Background"
@@ -344,6 +344,30 @@
                                                 <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataFormat"/>
                                             </MultiBinding>
                                         </MenuItem.IsEnabled>
+                                    </MenuItem>
+
+                                    <MenuItem Header="Big Endian" IsCheckable="True">
+                                        <MenuItem.IsChecked>
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataEndian" Converter="{StaticResource EqualityConverter}">
+                                                <Binding.ConverterParameter>
+                                                    <local:DataEndianess>
+                                                        Big
+                                                    </local:DataEndianess>
+                                                </Binding.ConverterParameter>
+                                            </Binding>
+                                        </MenuItem.IsChecked>
+                                    </MenuItem>
+
+                                    <MenuItem Header="Little Endian" IsCheckable="True">
+                                        <MenuItem.IsChecked>
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="DataEndian" Converter="{StaticResource EqualityConverter}">
+                                                <Binding.ConverterParameter>
+                                                    <local:DataEndianess>
+                                                        Little
+                                                    </local:DataEndianess>
+                                                </Binding.ConverterParameter>
+                                            </Binding>
+                                        </MenuItem.IsChecked>
                                     </MenuItem>
 
                                     <Separator/>
