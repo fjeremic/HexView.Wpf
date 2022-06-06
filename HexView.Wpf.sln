@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexView.Wpf", "HexView.Wpf\HexView.Wpf.csproj", "{2CB8E7C9-895D-4E4C-BC26-5E8FA1370B74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexView.Wpf", "HexView.Wpf\HexView.Wpf.csproj", "{2CB8E7C9-895D-4E4C-BC26-5E8FA1370B74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexView.Wpf.Demo", "HexView.Wpf.Demo\HexView.Wpf.Demo.csproj", "{8E1FA27D-1DC3-462C-B257-4342621B5DCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexView.Wpf.Demo", "HexView.Wpf.Demo\HexView.Wpf.Demo.csproj", "{8E1FA27D-1DC3-462C-B257-4342621B5DCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EndianTester", "EndianTester\EndianTester.csproj", "{72D34096-413C-4419-B70A-198C55C70887}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{8E1FA27D-1DC3-462C-B257-4342621B5DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E1FA27D-1DC3-462C-B257-4342621B5DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E1FA27D-1DC3-462C-B257-4342621B5DCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72D34096-413C-4419-B70A-198C55C70887}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72D34096-413C-4419-B70A-198C55C70887}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72D34096-413C-4419-B70A-198C55C70887}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72D34096-413C-4419-B70A-198C55C70887}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
