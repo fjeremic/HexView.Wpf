@@ -56,7 +56,7 @@
                 new FrameworkPropertyMetadata(16, OnPropertyChangedInvalidateVisual, CoerceColumns));
 
         /// <summary>
-        ///  Defines the Endian (Big or Little) of the data in the stream
+        ///  Defines the Endian (Big or Little) of the data in the stream.
         /// </summary>
         public static readonly DependencyProperty DataEndianProperty =
             DependencyProperty.Register(nameof(DataEndian), typeof(DataEndianess), typeof(HexViewer),
@@ -473,7 +473,7 @@
         }
 
         /// <summary>
-        /// Gets or sets a value indicating if the address is in short or long format
+        /// Gets or sets a value indicating if the address is in short or long format.
         /// </summary>
         public AddressDisplayFormat AddressDisplayFormat
         {
@@ -1579,21 +1579,21 @@
 
                                         case 2:
                                         {
-                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadInt16():+#;-#;0}".PadLeft(6) : $"{DataSource.ReadInt16BE():+#;-#;0}".PadLeft(6);
+                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadInt16LE():+#;-#;0}".PadLeft(6) : $"{DataSource.ReadInt16BE():+#;-#;0}".PadLeft(6);
                                         }
 
                                         break;
 
                                         case 4:
                                         {
-                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadInt32():+#;-#;0}".PadLeft(11) : $"{DataSource.ReadInt32BE():+#;-#;0}".PadLeft(11);
+                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadInt32LE():+#;-#;0}".PadLeft(11) : $"{DataSource.ReadInt32BE():+#;-#;0}".PadLeft(11);
                                         }
 
                                         break;
 
                                         case 8:
                                         {
-                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadInt64():+#;-#;0}".PadLeft(21) : $"{DataSource.ReadInt64BE():+#;-#;0}".PadLeft(21);
+                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadInt64LE():+#;-#;0}".PadLeft(21) : $"{DataSource.ReadInt64BE():+#;-#;0}".PadLeft(21);
                                         }
 
                                         break;
@@ -1620,21 +1620,21 @@
 
                                         case 2:
                                         {
-                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt16()}".PadLeft(5) : $"{DataSource.ReadUInt16BE()}".PadLeft(5);
+                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt16LE()}".PadLeft(5) : $"{DataSource.ReadUInt16BE()}".PadLeft(5);
                                         }
 
                                         break;
 
                                         case 4:
                                         {
-                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt32()}".PadLeft(10) : $"{DataSource.ReadUInt32BE()}".PadLeft(10);
+                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt32LE()}".PadLeft(10) : $"{DataSource.ReadUInt32BE()}".PadLeft(10);
                                         }
 
                                         break;
 
                                         case 8:
                                         {
-                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt64()}".PadLeft(20) : $"{DataSource.ReadUInt64BE()}".PadLeft(20);
+                                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt64LE()}".PadLeft(20) : $"{DataSource.ReadUInt64BE()}".PadLeft(20);
                                         }
 
                                         break;
@@ -1670,21 +1670,21 @@
 
                                 case 2:
                                 {
-                                    result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt16(),0:X4}" : $"{DataSource.ReadUInt16BE(),0:X4}";
+                                    result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt16LE(),0:X4}" : $"{DataSource.ReadUInt16BE(),0:X4}";
                                 }
 
                                 break;
 
                                 case 4:
                                 {
-                                    result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt32(),0:X8}" : $"{DataSource.ReadUInt32BE(),0:X8}";
+                                    result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt32LE(),0:X8}" : $"{DataSource.ReadUInt32BE(),0:X8}";
                                 }
 
                                 break;
 
                                 case 8:
                                 {
-                                    result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt64(),0:X16}" : $"{DataSource.ReadUInt64BE(),0:X16}";
+                                    result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadUInt64LE(),0:X16}" : $"{DataSource.ReadUInt64BE(),0:X16}";
                                 }
 
                                 break;
@@ -1713,14 +1713,14 @@
                     {
                         case 4:
                         {
-                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadFloat(),0:E08}".PadLeft(16) : $"{DataSource.ReadFloatBE(),0:E08}".PadLeft(16);
+                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadFloatLE(),0:E08}".PadLeft(16) : $"{DataSource.ReadFloatBE(),0:E08}".PadLeft(16);
                         }
 
                         break;
 
                         case 8:
                         {
-                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadDouble(),0:E16}".PadLeft(24) : $"{DataSource.ReadDoubleBE(),0:E16}".PadLeft(24);
+                            result = (DataEndian == DataEndianess.Little) ? $"{DataSource.ReadDoubleLE(),0:E16}".PadLeft(24) : $"{DataSource.ReadDoubleBE(),0:E16}".PadLeft(24);
                         }
 
                         break;
